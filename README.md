@@ -131,7 +131,9 @@ skaffold delete -f skaffold-modules-deploy.yaml  --kube-context=asm01
 skaffold delete -f skaffold-modules-deploy.yaml  --kube-context=asm02
 ```
 
-## Other Deployment Options
+## Other Deployment Options 
+**to deploy using Cloud Deploy** we can execute the script deploy.sh. This one will create a simple pipeline with 2 targets
+
 
 ## Architecture
 
