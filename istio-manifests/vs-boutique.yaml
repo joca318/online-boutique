@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata: # kpt-merge: frontend/frontend-ingress
+  name: vs-boutique
+  namespace: frontend
+spec:
+  hosts:
+  - "hipster.j22o.cloud"
+  gateways:
+  - gw-hipster
+  http:
+  - route:
+    - destination:
+        host: frontend
+        port:
+          number: 80

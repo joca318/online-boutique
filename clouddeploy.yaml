@@ -1,0 +1,33 @@
+apiVersion: deploy.cloud.google.com/v1beta1
+kind: DeliveryPipeline
+metadata:
+ name: boutique-demo-app01
+description: main application pipeline - go shopping 
+serialPipeline:
+ stages:
+ - targetId: dev
+   profiles: []
+ - targetId: prod
+   profiles: []
+---
+
+apiVersion: deploy.cloud.google.com/v1beta1
+kind: Target
+metadata:
+ name: dev
+description: development cluster [ASM01]
+anthosCluster:
+  membership: projects/service-project-256014/locations/global/memberships/asm01
+#gke:
+#  cluster: projects/service-project-256014/locations/us-central1-c/clusters/asm01
+---
+
+apiVersion: deploy.cloud.google.com/v1beta1
+kind: Target
+metadata:
+ name: prod
+description: production cluster [ASM02]
+anthosCluster:
+  membership: projects/service-project-256014/locations/global/memberships/asm02
+#gke:
+#  cluster: projects/d-iot-gpa01/locations/us-east1-c/clusters/asm02

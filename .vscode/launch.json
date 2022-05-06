@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Kubernetes: Run/Debug - gcb",
+            "type": "cloudcode.kubernetes",
+            "request": "launch",
+            "skaffoldConfig": "${workspaceFolder}/skaffold-modules-deploy.yaml",
+            "profile": "gcb",
+            "watch": true,
+            "cleanUp": true,
+            "portForward": true
+        }
+    ]
+}

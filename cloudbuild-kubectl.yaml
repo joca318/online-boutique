@@ -1,0 +1,44 @@
+#Test1
+steps:
+- id: ' GET Variables ASM01'
+  name: 'gcr.io/cloud-builders/kubectl'
+  args: ['get', 'pods']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=$_ZONE_1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_1'
+  - 'CLOUDSDK_CORE_PROJECT=$_PROJECT_ID_1'
+#Test2
+- id: ' GET Variables ASM02'
+  name: 'gcr.io/cloud-builders/kubectl'
+  args: ['get', 'pods']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=$_ZONE_2'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_2'
+  - 'CLOUDSDK_CORE_PROJECT=$_PROJECT_ID_2'
+#Test3
+- id: ' GET bins ASM02'
+  name: 'gcr.io/cloud-builders/kubectl'
+  entrypoint: 'bash'
+  args: 
+  - '-c'
+  - >
+    ls /bin;
+    ls /usr/local/bin;
+    ls /sbin;
+    set;
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=$_ZONE_2'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_2'
+  - 'CLOUDSDK_CORE_PROJECT=$_PROJECT_ID_2'
+#- id: ' GET PODS using skaffold version'
+#  name: 'gcr.io/k8s-skaffold/skaffold:v1.37.0'
+#  entrypoint: 'bash'
+#  args: 
+#  - '-c'
+#  - >
+#    gcloud container clusters get-credentials --zone=$_ZONE_1 $_CLUSTER_1 --project $_PROJECT_ID_1;
+#    gcloud container clusters get-credentials --zone=$_ZONE_2 $_CLUSTER_2 --project $_PROJECT_ID_2; 
+#    for i in $(kubectl get pods -o name); do kubectl describe $i; done;
+##  env:
+##  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+##  - 'CLOUDSDK_CONTAINER_CLUSTER=asm01'

@@ -1,0 +1,118 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: frontend
+requires:
+  - configs: [db]
+deploy:
+  kubectl:
+    manifests:
+    - ./k8s-manifests/namespaces/ad.yaml
+    - ./k8s-manifests/namespaces/frontend.yaml
+    - ./k8s-manifests/namespaces/recommendation.yaml
+    - ./k8s-manifests/deployments/adservice.yaml
+    - ./k8s-manifests/deployments/frontend.yaml
+    - ./k8s-manifests/deployments/recommendationservice.yaml
+    - ./k8s-manifests/services/adservice.yaml
+    - ./k8s-manifests/services/frontend.yaml
+    - ./k8s-manifests/services/recommendationservice.yaml
+profiles:
+# "gcb" profile allows building and pushing the images
+# on Google Container Builder without requiring docker
+# installed on the developer machine. However, note that
+# since GCB does not cache the builds, each build will
+# start from scratch and therefore take a long time.
+#
+# This is not used by default. To use it, run:
+#     skaffold run -p gcb
+- name: gcb
+  build:
+    googleCloudBuild:
+      diskSizeGb: 100
+      machineType: N1_HIGHCPU_32
+      timeout: 4000s
+# "debug" profile replaces the default Dockerfile in cartservice with Dockerfile.debug, 
+# which enables debugging via skaffold.
+#
+# This profile is used by default when running skaffold debug.
+- name: debug
+  activation:
+    - command: debug
+  patches:
+    - op: replace
+      path: /build/artifacts/7/docker/dockerfile
+      value: Dockerfile.debug
+---
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: backend
+requires:
+  - configs: [frontend]
+  - configs: [db]
+deploy:
+  kubectl:
+    manifests:
+    - ./k8s-manifests/namespaces/cart.yaml
+    - ./k8s-manifests/namespaces/checkout.yaml
+    - ./k8s-manifests/namespaces/currency.yaml
+    - ./k8s-manifests/namespaces/email.yaml
+    - ./k8s-manifests/namespaces/payment.yaml
+    - ./k8s-manifests/namespaces/product-catalog.yaml
+    - ./k8s-manifests/namespaces/shipping.yaml
+    - ./k8s-manifests/deployments/cartservice.yaml
+    - ./k8s-manifests/deployments/checkoutservice.yaml
+    - ./k8s-manifests/deployments/currencyservice.yaml
+    - ./k8s-manifests/deployments/emailservice.yaml
+    - ./k8s-manifests/deployments/paymentservice.yaml
+    - ./k8s-manifests/deployments/productcatalogservice.yaml
+    - ./k8s-manifests/deployments/shippingservice.yaml
+    - ./k8s-manifests/services/cartservice.yaml
+    - ./k8s-manifests/services/checkoutservice.yaml
+    - ./k8s-manifests/services/currencyservice.yaml
+    - ./k8s-manifests/services/emailservice.yaml
+    - ./k8s-manifests/services/paymentservice.yaml
+    - ./k8s-manifests/services/productcatalogservice.yaml
+    - ./k8s-manifests/services/shippingservice.yaml
+
+---
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: db
+deploy:
+  kubectl:
+    manifests:
+    - ./k8s-manifests/namespaces/redis-cart.yaml
+    - ./k8s-manifests/deployments/redis.yaml
+    - ./k8s-manifests/services/redisservice.yaml
+---
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: mesh
+requires:
+  - configs: [frontend]
+  - configs: [db]
+deploy:
+  kubectl:
+    manifests:
+    - ./istio-manifests/allow-egress-googleapis.yaml
+    - ./istio-manifests/gw-boutique.yaml
+    - ./istio-manifests/vs-boutique.yaml
+
+---
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: loadgenerator
+requires:
+  - configs: [frontend]
+  - configs: [backend]
+  - configs: [db]
+  - configs: [mesh]
+deploy:
+  kubectl:
+    manifests:
+    - ./k8s-manifests/namespaces/loadgenerator.yaml
+    - ./k8s-manifests/deployments/loadgenerator.yaml

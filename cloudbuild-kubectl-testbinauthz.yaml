@@ -1,0 +1,47 @@
+#Scan1
+steps:
+   - id: scan
+     name: gcr.io/google.com/cloudsdktool/cloud-sdk
+     entrypoint: bash
+     args:
+     - '-c'
+     - |
+       gcloud artifacts docker images scan us-docker.pkg.dev/$_PROJECT_ID/gcr.io/adservice:latest --location us --remote \
+       --format='value(response.scan)' > /workspace/scan_id.txt
+   - id: severity check
+     name: gcr.io/google.com/cloudsdktool/cloud-sdk
+     entrypoint: bash
+     args:
+     - '-c'
+     - |
+       gcloud artifacts docker images list-vulnerabilities $(cat /workspace/scan_id.txt) \
+       --format='value(vulnerability.effectiveSeverity)' --location us | if grep -Fxq $_SEVERITY; \
+       then echo 'Failed vulnerability check' && exit 1; else exit 0; fi
+     env:
+     - 'SEVERITY=$_SEVERITY'
+   - id: 'Deploy application #Cluster ASM #01'
+     name: 'gcr.io/k8s-skaffold/skaffold:v1.38.0'
+     entrypoint: 'bash'
+     args: 
+     - '-c'
+     - >
+       gcloud container clusters get-credentials --zone=$_ZONE_1 $_CLUSTER_1 --project $_PROJECT_ID_1;
+       skaffold run -p gcb -f=skaffold-modules-deploy.yaml;
+     waitFor: ['severity check']
+     env:
+     - 'CLOUDSDK_COMPUTE_ZONE=$_ZONE_1'
+     - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_1'
+     - 'CLOUDSDK_CORE_PROJECT=$_PROJECT_ID_1'
+   - id: 'Deploy application #Cluster ASM #02'
+     name: 'gcr.io/k8s-skaffold/skaffold:v1.38.0'
+     entrypoint: 'bash'
+     args: 
+     - '-c'
+     - >
+       gcloud container clusters get-credentials --zone=$_ZONE_2 $_CLUSTER_2 --project $_PROJECT_ID_2; 
+       skaffold run -p gcb -f=skaffold-modules-deploy.yaml;
+     waitFor: ['Deploy application #Cluster ASM #01', 'severity check']
+     env:
+     - 'CLOUDSDK_COMPUTE_ZONE=$_ZONE_2'
+     - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_2'
+     - 'CLOUDSDK_CORE_PROJECT=$_PROJECT_ID_2'
