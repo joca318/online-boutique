@@ -49,7 +49,7 @@ git clone https://github.com/joca318/online-boutique.git
 cd online-boutique
 ```
 
-3. **Access GKE cluster ASM0[1-2].**
+3. **Access GKE cluster ASM0[1-2]**
 
 ```
 _ZONE_1=us-central1-c
