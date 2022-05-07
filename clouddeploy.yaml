@@ -7,7 +7,9 @@ serialPipeline:
  stages:
  - targetId: dev
    profiles: []
- - targetId: prod
+ - targetId: prod-us-east1
+   profiles: []
+ - targetId: prod-us-east1-c
    profiles: []
 ---
 
@@ -25,7 +27,19 @@ gke:
 apiVersion: deploy.cloud.google.com/v1beta1
 kind: Target
 metadata:
- name: prod
+ name: prod-us-east1
+description: production cluster [ASM02]
+requireApproval: true
+#anthosCluster:
+#  membership: projects/service-project-256014/locations/global/memberships/asm02
+gke:
+  cluster: projects/d-iot-gpa01/locations/us-east1-c/clusters/asm02
+
+---
+apiVersion: deploy.cloud.google.com/v1beta1
+kind: Target
+metadata:
+ name: prod-us-east1-c
 description: production cluster [ASM02]
 #anthosCluster:
 #  membership: projects/service-project-256014/locations/global/memberships/asm02
