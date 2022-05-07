@@ -42,7 +42,7 @@ If you’re using this demo, please **★Star** this repository to show your int
 the clusters are created already
 ```
 
-2. **Clone this repository.**
+2. **Clone this repository**
 
 ```
 git clone https://github.com/joca318/online-boutique.git 
