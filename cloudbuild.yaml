@@ -35,7 +35,7 @@ steps:
    - id: create release in google cloud deploy
      name: gcr.io/google.com/cloudsdktool/cloud-sdk
      entrypoint: gcloud
-     waitFor: ['severity check'] 
+     waitFor: ['severity check', 'from to'] 
      args:
        [
          "deploy", "releases", "create", "rel-${SHORT_SHA}",
