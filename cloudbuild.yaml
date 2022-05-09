@@ -23,7 +23,7 @@ steps:
      args:
      - '-c'
      - |-
-       if grep -Fxq $_SEVERITY /workspace/list-vulnerabilities.txt; then 
+       if grep -Fxq MORLOCKS /workspace/list-vulnerabilities.txt; then 
           echo 'Failed vulnerability check' $$i
           exit 1; 
        else echo 'Passed with success on vulnerability check' $$i
