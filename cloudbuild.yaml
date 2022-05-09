@@ -15,7 +15,7 @@ steps:
      - '-c'
      - |
        for i in $(cat /workspace/scan_id.txt); do gcloud artifacts docker images list-vulnerabilities $i --location us \
-       --format='value(vulnerability.effectiveSeverity)'| if grep -Fxq $_SEVERITY; then echo 'Failed vulnerability check $i' && exit 1; else echo 'Passed with success on vulnerability check' && exit 0; fi;  done
+       --format='value(vulnerability.effectiveSeverity)'| if grep -Fxq $_SEVERITY; then echo 'Failed vulnerability check $$i' && exit 1; else echo 'Passed with success on vulnerability check' $$i && exit 0; fi;  done
      env:
      - 'SEVERITY=$_SEVERITY'
      # Create release in Google Cloud Deploy
