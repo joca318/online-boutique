@@ -6,8 +6,7 @@ steps:
      args: 
      - '-c'
      - |
-       gcloud artifacts docker images scan us-docker.pkg.dev/$_MAIN_PROJECT_ID/gcr.io/adservice:latest --location us --remote \
-       --format='value(response.scan)' > /workspace/scan_id.txt
+       for i in $(gcloud artifacts docker images list us-docker.pkg.dev/$_MAIN_PROJECT_ID/gcr.io/ --format='value(package,version)' | awk  '{print $1 "@" $NF }'); do gcloud artifacts docker images scan $i --location us --remote --format='value(response.scan)' >> /workspace/scan_id.txt; done
    - id: severity check
      name: gcr.io/google.com/cloudsdktool/cloud-sdk
      entrypoint: bash
@@ -15,9 +14,8 @@ steps:
      args:
      - '-c'
      - |
-       gcloud artifacts docker images list-vulnerabilities $(cat /workspace/scan_id.txt) \
-       --format='value(vulnerability.effectiveSeverity)' --location us | if grep -Fxq $_SEVERITY; \
-       then echo 'Failed vulnerability check' && exit 1; else exit 0; fi
+       for i in $(cat /workspace/scan_id.txt); do gcloud artifacts docker images list-vulnerabilities $i --location us \
+       --format='value(vulnerability.effectiveSeverity)'| if grep -Fxq LOW;then echo 'Failed vulnerability check' && exit 1; else echo 'Passed with success on vulnerability check' && exit 0; fi;  done
      env:
      - 'SEVERITY=$_SEVERITY'
      # Create release in Google Cloud Deploy
