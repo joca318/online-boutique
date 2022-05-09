@@ -66,7 +66,7 @@ ZONE=us-east1-c
 gcloud container clusters get-credentials --zone=$_ZONE_2 $_CLUSTER_2 --project $_PROJECT_ID_2
 ```
 
-4. **Deploy the sample app to the clusters. [ASM0[1-2]**
+4. **Deploy the sample app to the clusters [ASM0[1-2]**
 
 ```
 gcloud builds submit --config=cloudbuild-kubectl-testbinauthz.yaml --substitutions=_ZONE_2=us-east1-c,_PROJECT_ID_2=d-iot-gpa01,_CLUSTER_2=asm02,_ZONE_1=us-central1-c,_PROJECT_ID_1=service-project-256014,_CLUSTER_1=asm01,_PROJECT_ID=service-project-256014,_SEVERITY=HIGH
