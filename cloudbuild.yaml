@@ -16,6 +16,7 @@ steps:
      - |
        for i in $(cat /workspace/scan_id.txt); do gcloud artifacts docker images list-vulnerabilities $$i --location us \
        --format='value(vulnerability.effectiveSeverity)' >> /workspace/list-vulnerabilities.txt;  done
+     # Check vulnerability using grep
    - id: severity check
      name: gcr.io/google.com/cloudsdktool/cloud-sdk
      entrypoint: bash
