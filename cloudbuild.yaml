@@ -27,9 +27,9 @@ steps:
        if grep -Fxq $_SEVERITY /workspace/list-vulnerabilities.txt; then 
           echo 'Failed vulnerability check' $$i
           cat /workspace/list-vulnerabilities.txt
-          exit 1; 
+          exit 1 
        else echo 'Passed with success on vulnerability check' $$i
-          exit 0; 
+          exit 0 
        fi 
      env:
      - 'SEVERITY=$_SEVERITY'
