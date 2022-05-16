@@ -135,7 +135,7 @@ skaffold delete -f skaffold-modules-deploy.yaml  --kube-context=asm02
 **to deploy using Cloud Deploy.** we can execute the script deploy.sh. This one will create a simple pipeline with 2 targets
 
 
-## Architecture
+## Architecture.
 
 **Online Boutique** is composed of 11 microservices written in different
 languages that talk to each other over gRPC. See the [Development Principles](/docs/development-principles.md) doc for more information.
