@@ -26,7 +26,7 @@ If you’re using this demo, please **★Star** this repository to show your int
 > [go/microservices-demo](http://go/microservices-demo) if you are using this
 > application.
 
-## Screenshots
+## Screenshots.
 
 | Home Page                                                                                                         | Checkout Screen                                                                                                    |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -42,7 +42,7 @@ If you’re using this demo, please **★Star** this repository to show your int
 the clusters are created already
 ```
 
-2. **Clone this repository**
+2. **Clone this repository** ###test1
 
 ```
 git clone https://github.com/joca318/online-boutique.git 
