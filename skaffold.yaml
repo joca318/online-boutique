@@ -70,6 +70,9 @@ deploy:
     - ./k8s-manifests/services/recommendationservice.yaml
     - ./k8s-manifests/services/shippingservice.yaml
     - ./k8s-manifests/services/redisservice.yaml
+    - ./istio-manifests/allow-egress-googleapis.yaml
+    - ./istio-manifests/gw-boutique.yaml
+    - ./istio-manifests/vs-boutique.yaml   
 profiles:
 # "gcb" profile allows building and pushing the images
 # on Google Container Builder without requiring docker
