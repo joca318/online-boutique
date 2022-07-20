@@ -26,9 +26,9 @@ spec:
     - destination:
         host: productcatalogservice
         subset: v1
-      weight: 75
+      weight: 25
     - destination:
         host: productcatalogservice
         subset: v2
-      weight: 25
+      weight: 75
 # [END istio_istio_canary_gke_canary_virtualservice_productcatalogservice2]
