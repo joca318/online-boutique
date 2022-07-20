@@ -29,6 +29,7 @@ steps:
           cat /workspace/list-vulnerabilities.txt
           exit 1 
        else echo 'Passed with success on vulnerability check' $$i
+          cat /workspace/list-vulnerabilities.txt
           exit 0 
        fi 
      env:
