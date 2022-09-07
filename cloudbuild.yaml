@@ -39,10 +39,16 @@ steps:
      name: gcr.io/google.com/cloudsdktool/cloud-sdk
      entrypoint: gcloud
      waitFor: ['severity check', 'from to'] 
-     args: ["deploy", "releases", "create", "rel-${SHORT_SHA}", "--delivery-pipeline", "boutique-demo-app01", "--region", "us-central1", "--annotations", "commitId=${REVISION_ID}"]
+     args:
+       [
+         "deploy", "releases", "create", "rel-${SHORT_SHA}",
+         "--delivery-pipeline", "boutique-demo-app01",
+         "--region", "us-central1",
+         "--annotations", "commitId=${REVISION_ID}"
+       ]
 options:
  env:
  - 'MAIN_PROJECT_ID=$_MAIN_PROJECT_ID'
  - 'REGION=$_REGION'
- pool:
+ workerPool:
    name: 'projects/$_MAIN_PROJECT_ID/locations/$_REGION/workerpools/pp01'    
