@@ -47,10 +47,6 @@ steps:
         "--annotations", "commitId=${REVISION_ID}"
       ]
 
-
 options:
- env:
- - 'MAIN_PROJECT_ID=$_MAIN_PROJECT_ID'
- - 'REGION=$_REGION'
- pool:
-   name: 'projects/$_MAIN_PROJECT_ID/locations/$_REGION/workerPools/pp01'
+  pool:
+    name: 'projects/${PROJECT_ID}/locations/us-central1/workerPools/pp01'
