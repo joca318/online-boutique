@@ -34,7 +34,7 @@ steps:
        fi 
      env:
      - 'SEVERITY=$_SEVERITY'
-     # Create release in Google Cloud Deploy
+     # Create release in Google Cloud Deploy.
    - id: create release in google cloud deploy
      name: gcr.io/google.com/cloudsdktool/cloud-sdk
      entrypoint: gcloud
