@@ -46,7 +46,6 @@ steps:
         "--region", "us-central1",
         "--annotations", "commitId=${REVISION_ID}"
       ]
-
 options:
   pool:
     name: 'projects/${PROJECT_ID}/locations/us-central1/workerPools/pp01'
