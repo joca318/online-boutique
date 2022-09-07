@@ -29,6 +29,7 @@ steps:
           cat /workspace/list-vulnerabilities.txt
           exit 1 
        else echo 'Passed with success on vulnerability check' $$i
+          cat /workspace/list-vulnerabilities.txt
           exit 0 
        fi 
      env:
@@ -45,6 +46,16 @@ steps:
          "--region", "us-central1",
          "--annotations", "commitId=${REVISION_ID}"
        ]
+<<<<<<< HEAD
    options:
      pool:
        name: 'projects/service-project-256014/locations/us-central1/workerPools/pp01'    
+=======
+     #entrypoint: bash
+     #waitFor: ['severity check'] 
+     #args:
+     #- '-c'
+     #- |
+     #  gcloud deploy releases create rel-$(date +%s) --delivery-pipeline boutique-demo-app01 \
+     #  --region us-central1 --annotations commitId=${REVISION_ID}
+>>>>>>> 82c3b21bb9c360ddaf31c57cf6684d2ba7c8e416
