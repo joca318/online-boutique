@@ -46,10 +46,3 @@ steps:
          "--region", "us-central1",
          "--annotations", "commitId=${REVISION_ID}"
        ]
-     #entrypoint: bash
-     #waitFor: ['severity check'] 
-     #args:
-     #- '-c'
-     #- |
-     #  gcloud deploy releases create rel-$(date +%s) --delivery-pipeline boutique-demo-app01 \
-     #  --region us-central1 --annotations commitId=${REVISION_ID}
