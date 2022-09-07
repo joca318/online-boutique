@@ -53,4 +53,4 @@ options:
  - 'MAIN_PROJECT_ID=$_MAIN_PROJECT_ID'
  - 'REGION=$_REGION'
  pool:
-   name: 'projects/$_MAIN_PROJECT_ID/locations/$_REGION/workerPools/pp01'    
+   name: 'projects/$_MAIN_PROJECT_ID/locations/$_REGION/workerPools/pp01'
