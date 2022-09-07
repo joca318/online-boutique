@@ -47,9 +47,9 @@ steps:
          "--annotations", "commitId=${REVISION_ID}"
        ]
 <<<<<<< HEAD
-   options:
-     pool:
-       name: 'projects/service-project-256014/locations/us-central1/workerPools/pp01'    
+options:
+  pool:
+    name: 'projects/service-project-256014/locations/us-central1/workerPools/pp01'    
 =======
      #entrypoint: bash
      #waitFor: ['severity check'] 
