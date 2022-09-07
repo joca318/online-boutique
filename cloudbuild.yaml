@@ -48,4 +48,4 @@ steps:
       ]
 options:
   pool:
-    name: 'projects/${PROJECT_ID}/locations/us-central1/workerPools/pp01'
+    name: 'projects/service-project-256014/locations/us-central1/workerPools/pp01'
