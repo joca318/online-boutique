@@ -45,7 +45,7 @@ steps:
          "--delivery-pipeline", "boutique-demo-app01",
          "--region", "us-central1",
          "--annotations", "commitId=${REVISION_ID}"
-         ]
+       ]
 options:
  pool:
    name: 'projects/$_MAIN_PROJECT_ID/locations/$_REGION/workerpools/pp01'    
