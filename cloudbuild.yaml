@@ -4,34 +4,34 @@ steps:
     name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: bash
     args: 
-      - '-c'
-      - |
-        for i in $(gcloud artifacts docker images list us-docker.pkg.dev/$_MAIN_PROJECT_ID/gcr.io/ --format='value(package,version)' | awk  '{print $1 "@" $$NF}'); do gcloud artifacts docker images scan $i --location us --remote --format='value(response.scan)' >> /workspace/scan_id.txt; done
+    - '-c'
+    - |
+      for i in $(gcloud artifacts docker images list us-docker.pkg.dev/$_MAIN_PROJECT_ID/gcr.io/ --format='value(package,version)' | awk  '{print $1 "@" $$NF}'); do gcloud artifacts docker images scan $i --location us --remote --format='value(response.scan)' >> /workspace/scan_id.txt; done
   - id: from to
     name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: bash
     waitFor: ['scan']
     args:
-      - '-c'
-      - |
-        for i in $(cat /workspace/scan_id.txt); do gcloud artifacts docker images list-vulnerabilities $$i --location us \
-        --format='value(vulnerability.effectiveSeverity,vulnerability.shortDescription,resourceUri)' >> /workspace/list-vulnerabilities.txt;  done
+    - '-c'
+    - |
+      for i in $(cat /workspace/scan_id.txt); do gcloud artifacts docker images list-vulnerabilities $$i --location us \
+      --format='value(vulnerability.effectiveSeverity,vulnerability.shortDescription,resourceUri)' >> /workspace/list-vulnerabilities.txt;  done
     # Check vulnerability using grep
   - id: severity check
     name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: bash
     waitFor: ['from to']
     args:
-      - '-c'
-      - |-
-        if grep -Fxq $_SEVERITY /workspace/list-vulnerabilities.txt; then 
-           echo 'Failed vulnerability check' $$i
-           cat /workspace/list-vulnerabilities.txt
-           exit 1 
-        else echo 'Passed with success on vulnerability check' $$i
-           cat /workspace/list-vulnerabilities.txt
-           exit 0 
-        fi 
+    - '-c'
+    - |-
+      if grep -Fxq $_SEVERITY /workspace/list-vulnerabilities.txt; then 
+         echo 'Failed vulnerability check' $$i
+         cat /workspace/list-vulnerabilities.txt
+         exit 1 
+      else echo 'Passed with success on vulnerability check' $$i
+         cat /workspace/list-vulnerabilities.txt
+         exit 0 
+      fi 
     env:
     - 'SEVERITY=$_SEVERITY'
     # Create release in Google Cloud Deploy
@@ -46,6 +46,8 @@ steps:
         "--region", "us-central1",
         "--annotations", "commitId=${REVISION_ID}"
       ]
+
+
 options:
  env:
  - 'MAIN_PROJECT_ID=$_MAIN_PROJECT_ID'
