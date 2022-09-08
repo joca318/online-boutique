@@ -1,4 +1,4 @@
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v3alpha1
 kind: Config
 metadata:
   name: app
@@ -50,12 +50,12 @@ profiles:
 #
 # This is not used by default. To use it, run:
 #     skaffold run -p gcb
-- name: gcb
-  build:
-    googleCloudBuild:
-      diskSizeGb: 100
-      machineType: N1_HIGHCPU_32
-      timeout: 4000s
+#- name: gcb
+#  build:
+#    googleCloudBuild:
+#      diskSizeGb: 100
+#      machineType: N1_HIGHCPU_32
+#      timeout: 4000s
 # "debug" profile replaces the default Dockerfile in cartservice with Dockerfile.debug, 
 # which enables debugging via skaffold.
 #
@@ -70,7 +70,7 @@ profiles:
 
 ---
 
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v3alpha1
 kind: Config
 metadata:
   name: loadgenerator
@@ -81,3 +81,10 @@ deploy:
     manifests:
     - ./k8s-manifests/namespaces/loadgenerator.yaml
     - ./k8s-manifests/deployments/loadgenerator.yaml
+verify:
+- name: guaranteed-success
+  container:
+    name: will-succeed
+    image: alpine:3.16
+    command: ["/bin/echo"]
+    args: ["Hello world!" ]
