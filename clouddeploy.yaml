@@ -31,7 +31,7 @@ executionConfigs:
   - RENDER
   - DEPLOY
   - VERIFY
-  workerPool: 'projects/service-project-256014/locations/us-central1/workerPool/pp01' 
+  workerPool: "projects/service-project-256014/locations/us-central1/workerPools/pp01" 
 ---
 
 apiVersion: deploy.cloud.google.com/v1beta1
