@@ -22,6 +22,12 @@ description: development cluster [ASM01]
 #  membership: projects/service-project-256014/locations/global/memberships/asm01
 gke:
   cluster: projects/service-project-256014/locations/us-central1-c/clusters/asm01
+  internalIp:
+executionConfigs:
+- usages:
+  - RENDER
+  - DEPLOY
+  workerPool: projects/service-project-256014/locations/us-central1/workerPool/pp02
 ---
 
 apiVersion: deploy.cloud.google.com/v1beta1
