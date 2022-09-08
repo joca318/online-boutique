@@ -27,7 +27,7 @@ executionConfigs:
 - usages:
   - RENDER
   - DEPLOY
-  workerPool: projects/service-project-256014/locations/us-central1/workerPool/pp02
+  workerPool: projects/service-project-256014/locations/us-central1/workerPool/pp01
 ---
 
 apiVersion: deploy.cloud.google.com/v1beta1
