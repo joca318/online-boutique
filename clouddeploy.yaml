@@ -1,4 +1,4 @@
-apiVersion: deploy.cloud.google.com/v1
+apiVersion: deploy.cloud.google.com/v1beta1
 kind: DeliveryPipeline
 metadata:
  name: boutique-demo-app01
@@ -8,7 +8,7 @@ serialPipeline:
  - targetId: dev
    profiles: []
    strategy:
-     default:
+     standard:
        verify: true
  - targetId: prod-us-east1
    profiles: []
@@ -16,7 +16,7 @@ serialPipeline:
    profiles: []
 ---
 
-apiVersion: deploy.cloud.google.com/v1
+apiVersion: deploy.cloud.google.com/v1beta1
 kind: Target
 metadata:
  name: dev
@@ -34,7 +34,7 @@ executionConfigs:
   workerPool: 'projects/service-project-256014/locations/us-central1/workerPool/pp01' 
 ---
 
-apiVersion: deploy.cloud.google.com/v1
+apiVersion: deploy.cloud.google.com/v1beta1
 kind: Target
 metadata:
  name: prod-us-east1
@@ -46,7 +46,7 @@ gke:
   cluster: projects/d-iot-gpa01/locations/us-east1-c/clusters/asm02
 
 ---
-apiVersion: deploy.cloud.google.com/v1
+apiVersion: deploy.cloud.google.com/v1beta1
 kind: Target
 metadata:
  name: prod-us-east1-c
